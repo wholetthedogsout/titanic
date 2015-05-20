@@ -6,6 +6,8 @@
   computeFareAvg();
   calcPercentMale();
   calcPercentFemale();
+  calcPercentSurvived();
+  calcPercentFemalesSurvived();
 
   function computeFareAvg() {
     var sumsTotal = {fare: 0};
@@ -34,11 +36,29 @@
     return percentMale;
     }
 
-    function calcPercentFemale() {
-      var percentFemale = 100 - calcPercentMale();
-      console.log(percentFemale);
-      return percentFemale;
+  function calcPercentFemale() {
+    var percentFemale = 100 - calcPercentMale();
+    console.log(percentFemale);
+    return percentFemale;
+  }
+
+  function calcPercentSurvived(){
+    var didSurvive = 0;
+    records.forEach(function (alive) {
+    if (alive.survived == '1'){
+      ++didSurvive;
     }
+    return didSurvive;
+    });
+    var percentSurvived = (didSurvive / records.length)*100;
+    console.log(percentSurvived);
+    return percentSurvived;
+  }
 
-
+  function calcPercentFemalesSurvived(){
+    return records.filter(function(blah) {
+      return blah.sex == 'female' && blah.survived == '1';
+    }).length/(records.length*(calcPercentSurvived()/100))*100;
+}
+console.log(calcPercentFemalesSurvived());
 })();
